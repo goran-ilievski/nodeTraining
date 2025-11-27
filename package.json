@@ -6,10 +6,18 @@
   "repository": "https://github.com/goran-ilievski/nodeTraining.git",
   "author": "Goran Ilievski <g.ilievski@mak-system.net>",
   "license": "MIT",
+  "scripts": {
+    "clean": "taskkill /F /IM node.exe 2>nul || echo No node processes found",
+    "start:server": "node server.js",
+    "start:client": "cd app/Client && yarn start",
+    "start:app": "concurrently \"yarn start:server\" \"yarn start:client\""
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "mysql": "^2.18.1",
     "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
