@@ -6,9 +6,10 @@ import {
   Paper,
   TextField,
   Typography,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
   CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -18,13 +19,16 @@ import ErrorPopup from "./ErrorPopup";
 import "./CreateUser.css";
 
 const createUser = async (userData) => {
-  const response = await fetch("http://localhost:8080/api/users", {
+  const delay = new Promise((resolve) => setTimeout(resolve, 2000));
+  const apiCall = fetch("http://localhost:8080/api/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(userData),
   });
+
+  const [response] = await Promise.all([apiCall, delay]);
 
   if (!response.ok) {
     const error = await response.json();
@@ -37,11 +41,7 @@ const createUser = async (userData) => {
 const CreateUser = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [permissions, setPermissions] = useState({
-    superuser: false,
-    reviewer: false,
-    guest: false,
-  });
+  const [role, setRole] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -58,23 +58,13 @@ const CreateUser = () => {
     },
   });
 
-  const handlePermissionChange = (event) => {
-    setPermissions({
-      ...permissions,
-      [event.target.name]: event.target.checked,
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const selectedPermissions = Object.keys(permissions).filter(
-      (key) => permissions[key]
-    );
 
     mutation.mutate({
       username,
       password,
-      permissions: selectedPermissions,
+      role,
     });
   };
 
@@ -128,49 +118,19 @@ const CreateUser = () => {
               disabled={mutation.isPending}
             />
 
-            <Box className="create-user-permissions">
-              <Typography
-                variant="subtitle1"
-                className="create-user-permissions-title"
+            <FormControl fullWidth required>
+              <InputLabel>Role</InputLabel>
+              <Select
+                value={role}
+                label="Role"
+                onChange={(e) => setRole(e.target.value)}
+                disabled={mutation.isPending}
               >
-                Permissions
-              </Typography>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={permissions.superuser}
-                      onChange={handlePermissionChange}
-                      name="superuser"
-                      disabled={mutation.isPending}
-                    />
-                  }
-                  label="Superuser"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={permissions.reviewer}
-                      onChange={handlePermissionChange}
-                      name="reviewer"
-                      disabled={mutation.isPending}
-                    />
-                  }
-                  label="Reviewer"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={permissions.guest}
-                      onChange={handlePermissionChange}
-                      name="guest"
-                      disabled={mutation.isPending}
-                    />
-                  }
-                  label="Guest"
-                />
-              </FormGroup>
-            </Box>
+                <MenuItem value="superuser">Superuser</MenuItem>
+                <MenuItem value="reviewer">Reviewer</MenuItem>
+                <MenuItem value="guest">Guest</MenuItem>
+              </Select>
+            </FormControl>
 
             <Box className="create-user-buttons">
               <Button

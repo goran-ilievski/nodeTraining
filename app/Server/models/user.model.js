@@ -4,13 +4,13 @@ const sql = require("./index.js");
 const User = function (user) {
   this.username = user.username;
   this.password = user.password;
-  this.permissions = user.permissions || [];
+  this.role = user.role;
 };
 
 User.create = (newUser, result) => {
   sql.query(
-    "INSERT INTO users(username, password, permissions) VALUES($1, $2, $3) RETURNING id, username, permissions, created_at",
-    [newUser.username, newUser.password, newUser.permissions],
+    "INSERT INTO users(username, password, role) VALUES($1, $2, $3) RETURNING id, username, role, created_at",
+    [newUser.username, newUser.password, newUser.role],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -26,7 +26,7 @@ User.create = (newUser, result) => {
 
 User.findById = (id, result) => {
   sql.query(
-    "SELECT id, username, permissions, created_at, updated_at FROM users WHERE id = $1",
+    "SELECT id, username, role, created_at, updated_at FROM users WHERE id = $1",
     [id],
     (err, res) => {
       if (err) {
@@ -48,7 +48,7 @@ User.findById = (id, result) => {
 
 User.findByUsername = (username, result) => {
   sql.query(
-    "SELECT id, username, permissions, created_at, updated_at FROM users WHERE username = $1",
+    "SELECT id, username, role, created_at, updated_at FROM users WHERE username = $1",
     [username],
     (err, res) => {
       if (err) {
@@ -69,7 +69,7 @@ User.findByUsername = (username, result) => {
 
 User.getAll = (result) => {
   sql.query(
-    "SELECT id, username, permissions, created_at, updated_at FROM users",
+    "SELECT id, username, role, created_at, updated_at FROM users",
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -84,8 +84,8 @@ User.getAll = (result) => {
 
 User.updateById = (id, user, result) => {
   sql.query(
-    "UPDATE users SET username = $1, password = $2, permissions = $3, updated_at = CURRENT_TIMESTAMP WHERE id = $4 RETURNING id, username, permissions, updated_at",
-    [user.username, user.password, user.permissions, id],
+    "UPDATE users SET username = $1, password = $2, role = $3, updated_at = CURRENT_TIMESTAMP WHERE id = $4 RETURNING id, username, role, updated_at",
+    [user.username, user.password, user.role, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

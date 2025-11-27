@@ -3,9 +3,9 @@ const User = require("../models/user.model.js");
 // Create and Save a new User
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.username || !req.body.password) {
+  if (!req.body.username || !req.body.password || !req.body.role) {
     res.status(400).send({
-      message: "Username and password are required!",
+      message: "Username, password, and role are required!",
     });
     return;
   }
@@ -14,7 +14,7 @@ exports.create = (req, res) => {
   const user = new User({
     username: req.body.username,
     password: req.body.password,
-    permissions: req.body.permissions || [],
+    role: req.body.role,
   });
 
   // Save User in the database
