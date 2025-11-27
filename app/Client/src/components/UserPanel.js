@@ -13,7 +13,6 @@ import {
   Box,
 } from "@mui/material";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { userAPI } from "../api/handlers";
 import LoadingSpinner from "./LoadingSpinner";
@@ -21,9 +20,8 @@ import SuccessPopup from "./SuccessPopup";
 import ErrorPopup from "./ErrorPopup";
 import "./UserPanel.css";
 
-const UserPanel = () => {
+const UserPanel = ({ onNavigate }) => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [showError, setShowError] = React.useState(false);
@@ -53,7 +51,7 @@ const UserPanel = () => {
         <Paper className="user-panel-unauthorized">
           <Typography variant="h5">Access Denied</Typography>
           <Typography>You do not have permission to view this page.</Typography>
-          <Button variant="contained" onClick={() => navigate("/tutorials")}>
+          <Button variant="contained" onClick={() => onNavigate("tutorials")}>
             Go Back
           </Button>
         </Paper>
@@ -62,9 +60,8 @@ const UserPanel = () => {
   }
 
   const handleUpdate = (userId) => {
-    navigate(`/user-details/${userId}`);
+    onNavigate(`user-details-${userId}`);
   };
-
   const handleDelete = (userId, username) => {
     setDeletedUsername(username);
     deleteMutation.mutate(userId);

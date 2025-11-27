@@ -8,13 +8,11 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ onNavigate }) => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleSettingsClick = (event) => {
@@ -29,16 +27,16 @@ const Header = () => {
 
   const handleUserPanel = () => {
     handleClose();
-    navigate("/user-panel");
+    onNavigate("user-panel");
   };
 
   const handleUserDetails = () => {
-    navigate("/user-details");
+    onNavigate("user-details");
   };
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    onNavigate("login");
   };
 
   if (!user) return null;

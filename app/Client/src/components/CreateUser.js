@@ -11,7 +11,6 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { userAPI } from "../api/handlers";
 import SuccessPopup from "./SuccessPopup";
@@ -19,7 +18,7 @@ import ErrorPopup from "./ErrorPopup";
 import LoadingSpinner from "./LoadingSpinner";
 import "./CreateUser.css";
 
-const CreateUser = () => {
+const CreateUser = ({ onNavigate }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
@@ -27,7 +26,6 @@ const CreateUser = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: userAPI.create,
@@ -87,12 +85,12 @@ const CreateUser = () => {
   };
 
   const handleCancel = () => {
-    navigate("/");
+    onNavigate("login");
   };
 
   const handleSuccessClose = () => {
     setShowSuccess(false);
-    navigate("/");
+    onNavigate("login");
   };
 
   const handleErrorClose = () => {

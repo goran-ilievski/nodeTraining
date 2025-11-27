@@ -12,7 +12,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { userAPI } from "../api/handlers";
 import LoadingSpinner from "./LoadingSpinner";
@@ -20,10 +19,8 @@ import SuccessPopup from "./SuccessPopup";
 import ErrorPopup from "./ErrorPopup";
 import "./UserDetails.css";
 
-const UserDetails = () => {
+const UserDetails = ({ onNavigate, userId }) => {
   const { user: currentUser } = useAuth();
-  const navigate = useNavigate();
-  const { userId } = useParams();
   const targetUserId = userId || currentUser?.id;
 
   const [username, setUsername] = useState("");
@@ -115,7 +112,7 @@ const UserDetails = () => {
   const handleSuccessClose = () => {
     setShowSuccess(false);
     if (currentUser.role === "superuser" && userId) {
-      navigate("/user-panel");
+      onNavigate("user-panel");
     }
   };
 
@@ -134,7 +131,10 @@ const UserDetails = () => {
         <Paper className="user-details-unauthorized">
           <Typography variant="h5">Access Denied</Typography>
           <Typography>You can only edit your own user details.</Typography>
-          <Button variant="contained" onClick={() => navigate("/user-details")}>
+          <Button
+            variant="contained"
+            onClick={() => onNavigate("user-details")}
+          >
             View Your Details
           </Button>
         </Paper>
@@ -209,8 +209,8 @@ const UserDetails = () => {
                 fullWidth
                 onClick={() =>
                   currentUser.role === "superuser" && userId
-                    ? navigate("/user-panel")
-                    : navigate("/tutorials")
+                    ? onNavigate("user-panel")
+                    : onNavigate("tutorials")
                 }
                 disabled={mutation.isPending}
               >

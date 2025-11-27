@@ -7,7 +7,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import { userAPI } from "../api/handlers";
@@ -15,19 +14,18 @@ import LoadingSpinner from "./LoadingSpinner";
 import ErrorPopup from "./ErrorPopup";
 import "./LandingPage.css";
 
-const LandingPage = () => {
+const LandingPage = ({ onNavigate }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
   const { login } = useAuth();
 
   const loginMutation = useMutation({
     mutationFn: userAPI.login,
     onSuccess: (data) => {
       login(data);
-      navigate("/tutorials");
+      onNavigate("tutorials");
     },
     onError: (error) => {
       setErrorMessage(error.message || "Login failed");
@@ -48,7 +46,7 @@ const LandingPage = () => {
   };
 
   const handleCreateUser = () => {
-    navigate("/create-user");
+    onNavigate("create-user");
   };
 
   return (

@@ -13,7 +13,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import LogoutDialog from "./LogoutDialog";
 import "./TutorialList.css";
@@ -26,9 +25,8 @@ const fetchTutorials = async () => {
   return response.json();
 };
 
-const TutorialList = () => {
+const TutorialList = ({ onNavigate }) => {
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const navigate = useNavigate();
   const { logout } = useAuth();
 
   const {
@@ -48,7 +46,7 @@ const TutorialList = () => {
 
   const handleLogoutConfirm = () => {
     logout();
-    navigate("/");
+    onNavigate("login");
   };
 
   const handleLogoutCancel = () => {

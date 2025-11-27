@@ -6,9 +6,10 @@ import UserPanel from "./components/UserPanel";
 import UserDetails from "./components/UserDetails";
 import Header from "./components/Header";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { useState } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,24 +37,59 @@ const queryClient = new QueryClient({
   },
 });
 
+function AppContent() {
+  const { isAuthenticated } = useAuth();
+  const [currentView, setCurrentView] = useState("login");
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const handleNavigate = (view) => {
+    if (view.startsWith("user-details-")) {
+      const userId = view.replace("user-details-", "");
+      setSelectedUserId(userId);
+      setCurrentView("user-details");
+    } else {
+      setSelectedUserId(null);
+      setCurrentView(view);
+    }
+  };
+
+  const renderView = () => {
+    if (!isAuthenticated) {
+      if (currentView === "create-user") {
+        return <CreateUser onNavigate={handleNavigate} />;
+      }
+      return <LandingPage onNavigate={handleNavigate} />;
+    }
+
+    switch (currentView) {
+      case "tutorials":
+        return <TutorialList onNavigate={handleNavigate} />;
+      case "user-panel":
+        return <UserPanel onNavigate={handleNavigate} />;
+      case "user-details":
+        return (
+          <UserDetails onNavigate={handleNavigate} userId={selectedUserId} />
+        );
+      default:
+        return <TutorialList onNavigate={handleNavigate} />;
+    }
+  };
+
+  return (
+    <div className="App">
+      <Header onNavigate={handleNavigate} />
+      {renderView()}
+    </div>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <BrowserRouter>
-            <div className="App">
-              <Header />
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/create-user" element={<CreateUser />} />
-                <Route path="/tutorials" element={<TutorialList />} />
-                <Route path="/user-panel" element={<UserPanel />} />
-                <Route path="/user-details" element={<UserDetails />} />
-                <Route path="/user-details/:userId" element={<UserDetails />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </div>
+            <AppContent />
           </BrowserRouter>
         </AuthProvider>
       </QueryClientProvider>
