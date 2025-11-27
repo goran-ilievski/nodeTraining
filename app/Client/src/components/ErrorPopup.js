@@ -1,0 +1,41 @@
+import React from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+  Box,
+} from "@mui/material";
+import ErrorIcon from "@mui/icons-material/Error";
+import "./ErrorPopup.css";
+
+const ErrorPopup = ({ open, onClose, message }) => {
+  return (
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogContent className="error-popup-content">
+        <Box className="error-popup-icon-container">
+          <ErrorIcon className="error-popup-icon" />
+        </Box>
+        <DialogTitle className="error-popup-title">Error</DialogTitle>
+        <Typography className="error-popup-message">
+          {message || "Something went wrong. Please try again later."}
+        </Typography>
+      </DialogContent>
+      <DialogActions className="error-popup-actions">
+        <Button
+          onClick={onClose}
+          variant="contained"
+          color="error"
+          fullWidth
+          size="large"
+        >
+          OK
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default ErrorPopup;
