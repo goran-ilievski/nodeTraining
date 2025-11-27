@@ -24,8 +24,7 @@ const LandingPage = () => {
   };
 
   const handleCreateUser = () => {
-    // Navigate to create user page (to be implemented)
-    alert("Create user functionality coming soon!");
+    navigate("/create-user");
   };
 
   return (

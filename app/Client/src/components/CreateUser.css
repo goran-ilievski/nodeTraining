@@ -1,0 +1,46 @@
+.create-user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.create-user-paper {
+  padding: 2rem;
+  width: 100%;
+}
+
+.create-user-title {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.create-user-subtitle {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.create-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.create-user-permissions {
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.create-user-permissions-title {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.create-user-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
