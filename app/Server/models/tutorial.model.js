@@ -59,7 +59,6 @@ Tutorial.getAll = (title, result) => {
       return;
     }
 
-    console.log("tutorials: ", res.rows);
     result(null, res.rows);
   });
 };
@@ -72,7 +71,6 @@ Tutorial.getAllPublished = (result) => {
       return;
     }
 
-    console.log("tutorials: ", res.rows);
     result(null, res.rows);
   });
 };
@@ -127,7 +125,6 @@ Tutorial.removeAll = (result) => {
       return;
     }
 
-    console.log(`deleted ${res.rowCount} tutorials`);
     result(null, res);
   });
 };
