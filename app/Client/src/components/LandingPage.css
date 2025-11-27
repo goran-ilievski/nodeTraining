@@ -1,0 +1,28 @@
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.landing-paper {
+  padding: 2rem;
+  width: 100%;
+}
+
+.landing-title {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.landing-subtitle {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.landing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

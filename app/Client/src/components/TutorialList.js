@@ -13,6 +13,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import "./TutorialList.css";
 
 const fetchTutorials = async () => {
   const response = await fetch("http://localhost:8080/api/tutorials");
@@ -35,8 +36,8 @@ const TutorialList = () => {
   });
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
+    <Box className="tutorial-container">
+      <Typography variant="h4" className="tutorial-title">
         Tutorials
       </Typography>
 
@@ -44,7 +45,7 @@ const TutorialList = () => {
         variant="contained"
         color="primary"
         onClick={() => refetch()}
-        sx={{ mb: 2 }}
+        className="tutorial-button"
       >
         Get All Tutorials
       </Button>
@@ -79,7 +80,7 @@ const TutorialList = () => {
       )}
 
       {!isLoading && tutorials.length === 0 && !error && (
-        <Typography>
+        <Typography className="tutorial-empty-message">
           No tutorials found. Click the button to fetch tutorials.
         </Typography>
       )}

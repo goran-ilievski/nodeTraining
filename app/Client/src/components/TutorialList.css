@@ -1,0 +1,15 @@
+.tutorial-container {
+  padding: 1.5rem;
+}
+
+.tutorial-title {
+  margin-bottom: 1rem;
+}
+
+.tutorial-button {
+  margin-bottom: 1rem;
+}
+
+.tutorial-empty-message {
+  margin-top: 1rem;
+}

@@ -6,9 +6,9 @@ import {
   Paper,
   TextField,
   Typography,
-  Stack,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "./LandingPage.css";
 
 const LandingPage = () => {
   const [username, setUsername] = useState("");
@@ -30,70 +30,58 @@ const LandingPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "100vh",
-        }}
-      >
-        <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
+      <Box className="landing-container">
+        <Paper elevation={3} className="landing-paper">
+          <Typography variant="h4" component="h1" className="landing-title">
             Tutorial Manager
           </Typography>
           <Typography
             variant="body2"
             color="text.secondary"
-            gutterBottom
-            align="center"
-            sx={{ mb: 3 }}
+            className="landing-subtitle"
           >
             Please log in to continue
           </Typography>
 
-          <form onSubmit={handleLogin}>
-            <Stack spacing={3}>
-              <TextField
-                label="Username"
-                variant="outlined"
-                fullWidth
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
+          <form onSubmit={handleLogin} className="landing-form">
+            <TextField
+              label="Username"
+              variant="outlined"
+              fullWidth
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
 
-              <TextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                fullWidth
-              >
-                Log In
-              </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+            >
+              Log In
+            </Button>
 
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="large"
-                fullWidth
-                onClick={handleCreateUser}
-              >
-                Create User
-              </Button>
-            </Stack>
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="large"
+              fullWidth
+              onClick={handleCreateUser}
+            >
+              Create User
+            </Button>
           </form>
         </Paper>
       </Box>
