@@ -23,7 +23,12 @@ const fetchTutorials = async () => {
 };
 
 const TutorialList = () => {
-  const { data: tutorials = [], isLoading, error, refetch } = useQuery({
+  const {
+    data: tutorials = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["tutorials"],
     queryFn: fetchTutorials,
     enabled: false, // Don't fetch automatically on mount
@@ -46,11 +51,7 @@ const TutorialList = () => {
 
       {isLoading && <CircularProgress />}
 
-      {error && (
-        <Typography color="error">
-          Error: {error.message}
-        </Typography>
-      )}
+      {error && <Typography color="error">Error: {error.message}</Typography>}
 
       {tutorials.length > 0 && (
         <TableContainer component={Paper}>
