@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Table,
@@ -12,25 +12,22 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchTutorials = async () => {
+  const response = await fetch("http://localhost:8080/api/tutorials");
+  if (!response.ok) {
+    throw new Error("Failed to fetch tutorials");
+  }
+  return response.json();
+};
 
 const TutorialList = () => {
-  const [tutorials, setTutorials] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const fetchTutorials = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await axios.get("http://localhost:8080/api/tutorials");
-      setTutorials(response.data);
-    } catch (err) {
-      setError(err.response?.data?.message || err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data: tutorials = [], isLoading, error, refetch } = useQuery({
+    queryKey: ["tutorials"],
+    queryFn: fetchTutorials,
+    enabled: false, // Don't fetch automatically on mount
+  });
 
   return (
     <Box sx={{ p: 3 }}>
@@ -41,15 +38,19 @@ const TutorialList = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={fetchTutorials}
+        onClick={() => refetch()}
         sx={{ mb: 2 }}
       >
         Get All Tutorials
       </Button>
 
-      {loading && <CircularProgress />}
+      {isLoading && <CircularProgress />}
 
-      {error && <Typography color="error">Error: {error}</Typography>}
+      {error && (
+        <Typography color="error">
+          Error: {error.message}
+        </Typography>
+      )}
 
       {tutorials.length > 0 && (
         <TableContainer component={Paper}>
@@ -76,7 +77,7 @@ const TutorialList = () => {
         </TableContainer>
       )}
 
-      {!loading && tutorials.length === 0 && !error && (
+      {!isLoading && tutorials.length === 0 && !error && (
         <Typography>
           No tutorials found. Click the button to fetch tutorials.
         </Typography>
