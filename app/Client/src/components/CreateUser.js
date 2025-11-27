@@ -10,34 +10,14 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  FormHelperText,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { userAPI } from "../api/handlers";
 import SuccessPopup from "./SuccessPopup";
 import ErrorPopup from "./ErrorPopup";
 import LoadingSpinner from "./LoadingSpinner";
 import "./CreateUser.css";
-
-const createUser = async (userData) => {
-  const delay = new Promise((resolve) => setTimeout(resolve, 2000));
-  const apiCall = fetch("http://localhost:8080/api/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  });
-
-  const [response] = await Promise.all([apiCall, delay]);
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to create user");
-  }
-
-  return response.json();
-};
 
 const CreateUser = () => {
   const [username, setUsername] = useState("");
@@ -50,7 +30,7 @@ const CreateUser = () => {
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: createUser,
+    mutationFn: userAPI.create,
     onSuccess: (data) => {
       setShowSuccess(true);
     },

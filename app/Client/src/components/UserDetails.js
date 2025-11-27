@@ -14,38 +14,11 @@ import {
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { userAPI } from "../api/handlers";
 import LoadingSpinner from "./LoadingSpinner";
 import SuccessPopup from "./SuccessPopup";
 import ErrorPopup from "./ErrorPopup";
 import "./UserDetails.css";
-
-const fetchUser = async (userId) => {
-  const response = await fetch(`http://localhost:8080/api/users/${userId}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch user");
-  }
-  return response.json();
-};
-
-const updateUser = async ({ userId, userData }) => {
-  const delay = new Promise((resolve) => setTimeout(resolve, 2000));
-  const apiCall = fetch(`http://localhost:8080/api/users/${userId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  });
-
-  const [response] = await Promise.all([apiCall, delay]);
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to update user");
-  }
-
-  return response.json();
-};
 
 const UserDetails = () => {
   const { user: currentUser } = useAuth();
@@ -63,7 +36,7 @@ const UserDetails = () => {
 
   const { data: userData, isLoading } = useQuery({
     queryKey: ["user", targetUserId],
-    queryFn: () => fetchUser(targetUserId),
+    queryFn: () => userAPI.getById(targetUserId),
     enabled: !!targetUserId,
     onSuccess: (data) => {
       setUsername(data.username);
@@ -79,7 +52,7 @@ const UserDetails = () => {
   }, [userData]);
 
   const mutation = useMutation({
-    mutationFn: updateUser,
+    mutationFn: userAPI.update,
     onSuccess: () => {
       setShowSuccess(true);
     },

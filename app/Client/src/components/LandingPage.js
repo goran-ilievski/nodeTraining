@@ -8,7 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
+import { userAPI } from "../api/handlers";
 import LoadingSpinner from "./LoadingSpinner";
 import ErrorPopup from "./ErrorPopup";
 import "./LandingPage.css";
@@ -16,50 +18,33 @@ import "./LandingPage.css";
 const LandingPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleLogin = async (e) => {
+  const loginMutation = useMutation({
+    mutationFn: userAPI.login,
+    onSuccess: (data) => {
+      login(data);
+      navigate("/tutorials");
+    },
+    onError: (error) => {
+      setErrorMessage(error.message || "Login failed");
+      setShowError(true);
+    },
+  });
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    
+
     if (!username || !password) {
       setErrorMessage("Username and password are required!");
       setShowError(true);
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      // Fetch user by username
-      const response = await fetch(
-        `http://localhost:8080/api/users?username=${username}`
-      );
-
-      if (!response.ok) {
-        throw new Error("Invalid credentials");
-      }
-
-      const users = await response.json();
-      const user = users.find((u) => u.username === username);
-
-      if (!user) {
-        throw new Error("Invalid credentials");
-      }
-
-      // In production, you would verify the password hash here
-      // For now, we'll just log them in
-      login({ id: user.id, username: user.username, role: user.role });
-      navigate("/tutorials");
-    } catch (error) {
-      setErrorMessage(error.message || "Login failed");
-      setShowError(true);
-    } finally {
-      setIsLoading(false);
-    }
+    loginMutation.mutate(username);
   };
 
   const handleCreateUser = () => {
@@ -123,6 +108,14 @@ const LandingPage = () => {
           </form>
         </Paper>
       </Box>
+
+      <LoadingSpinner open={loginMutation.isPending} />
+
+      <ErrorPopup
+        open={showError}
+        onClose={() => setShowError(false)}
+        message={errorMessage}
+      />
     </Container>
   );
 };

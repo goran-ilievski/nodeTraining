@@ -15,34 +15,11 @@ import {
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { userAPI } from "../api/handlers";
 import LoadingSpinner from "./LoadingSpinner";
 import SuccessPopup from "./SuccessPopup";
 import ErrorPopup from "./ErrorPopup";
 import "./UserPanel.css";
-
-const fetchUsers = async () => {
-  const response = await fetch("http://localhost:8080/api/users");
-  if (!response.ok) {
-    throw new Error("Failed to fetch users");
-  }
-  return response.json();
-};
-
-const deleteUser = async (userId) => {
-  const delay = new Promise((resolve) => setTimeout(resolve, 2000));
-  const apiCall = fetch(`http://localhost:8080/api/users/${userId}`, {
-    method: "DELETE",
-  });
-
-  const [response] = await Promise.all([apiCall, delay]);
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to delete user");
-  }
-
-  return response.json();
-};
 
 const UserPanel = () => {
   const { user } = useAuth();
@@ -55,11 +32,11 @@ const UserPanel = () => {
 
   const { data: users, isLoading } = useQuery({
     queryKey: ["users"],
-    queryFn: fetchUsers,
+    queryFn: userAPI.getAll,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteUser,
+    mutationFn: userAPI.delete,
     onSuccess: () => {
       queryClient.invalidateQueries(["users"]);
       setShowSuccess(true);
