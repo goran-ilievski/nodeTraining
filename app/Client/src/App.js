@@ -14,11 +14,23 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: 3,
+      retry: (failureCount, error) => {
+        // Only retry on 500 errors, max 3 times
+        if (error?.message?.includes("500") || error?.status === 500) {
+          return failureCount < 3;
+        }
+        return false;
+      },
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
     },
     mutations: {
-      retry: 3,
+      retry: (failureCount, error) => {
+        // Only retry on 500 errors, max 3 times
+        if (error?.message?.includes("500") || error?.status === 500) {
+          return failureCount < 3;
+        }
+        return false;
+      },
       retryDelay: 10000,
     },
   },
