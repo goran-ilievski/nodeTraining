@@ -10,7 +10,11 @@ const pool = new Pool({
   port: dbConfig.PORT,
 });
 
-pool.query("SELECT NOW()", (error, results) => {
+pool.on("error", (err) => {
+  console.error("Unexpected error on idle client", err);
+});
+
+pool.connect((error, client, release) => {
   if (error) {
     console.error("Error connecting to the database:", error.message);
     console.error(
@@ -19,6 +23,7 @@ pool.query("SELECT NOW()", (error, results) => {
     return;
   }
   console.log("Successfully connected to the database.");
+  release();
 });
 
 module.exports = pool;
