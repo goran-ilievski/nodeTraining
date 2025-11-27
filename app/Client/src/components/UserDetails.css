@@ -1,0 +1,36 @@
+.user-details-container {
+  margin-top: 2rem;
+}
+
+.user-details-paper {
+  padding: 2rem;
+}
+
+.user-details-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.user-details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.user-details-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.user-details-unauthorized {
+  margin-top: 4rem;
+  padding: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}

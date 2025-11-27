@@ -1,0 +1,34 @@
+.user-panel-container {
+  margin-top: 2rem;
+}
+
+.user-panel-paper {
+  padding: 2rem;
+}
+
+.user-panel-title {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.user-panel-role {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.user-panel-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.user-panel-unauthorized {
+  margin-top: 4rem;
+  padding: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
