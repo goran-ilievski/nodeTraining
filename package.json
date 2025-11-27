@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "taskkill /F /IM node.exe 2>nul || echo No node processes found",
-    "start:server": "node server.js",
+    "start:server": "nodemon server.js",
     "start:client": "cd app/Client && yarn start",
     "start:app": "concurrently \"yarn start:server\" \"yarn start:client\""
   },
@@ -18,6 +18,7 @@
     "pg": "^8.16.3"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.11"
   }
 }
