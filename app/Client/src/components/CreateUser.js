@@ -10,12 +10,13 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  CircularProgress,
+  FormHelperText,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import SuccessPopup from "./SuccessPopup";
 import ErrorPopup from "./ErrorPopup";
+import LoadingSpinner from "./LoadingSpinner";
 import "./CreateUser.css";
 
 const createUser = async (userData) => {
@@ -42,6 +43,7 @@ const CreateUser = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -58,8 +60,44 @@ const CreateUser = () => {
     },
   });
 
+  const validatePassword = (value) => {
+    const minLength = 8;
+    const hasCapital = /[A-Z]/.test(value);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+    if (value.length < minLength) {
+      return "Password must be at least 8 characters long";
+    }
+    if (!hasCapital) {
+      return "Password must contain at least 1 capital letter";
+    }
+    if (!hasSpecial) {
+      return "Password must contain at least 1 special character";
+    }
+    return "";
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordError(validatePassword(value));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Frontend validation
+    if (!username || !password || !role) {
+      setErrorMessage("All fields are required!");
+      setShowError(true);
+      return;
+    }
+
+    const pwdError = validatePassword(password);
+    if (pwdError) {
+      setPasswordError(pwdError);
+      return;
+    }
 
     mutation.mutate({
       username,
@@ -114,8 +152,13 @@ const CreateUser = () => {
               fullWidth
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               disabled={mutation.isPending}
+              error={!!passwordError}
+              helperText={
+                passwordError ||
+                "Min 8 characters, 1 capital letter, 1 special character"
+              }
             />
 
             <FormControl fullWidth required>
@@ -141,11 +184,7 @@ const CreateUser = () => {
                 fullWidth
                 disabled={mutation.isPending}
               >
-                {mutation.isPending ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  "Create User"
-                )}
+                Create User
               </Button>
 
               <Button
@@ -162,6 +201,8 @@ const CreateUser = () => {
           </form>
         </Paper>
       </Box>
+
+      <LoadingSpinner open={mutation.isPending} />
 
       <SuccessPopup
         open={showSuccess}
