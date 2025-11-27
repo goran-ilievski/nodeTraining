@@ -9,9 +9,30 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import SuccessPopup from "./SuccessPopup";
+import ErrorPopup from "./ErrorPopup";
 import "./CreateUser.css";
+
+const createUser = async (userData) => {
+  const response = await fetch("http://localhost:8080/api/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to create user");
+  }
+
+  return response.json();
+};
 
 const CreateUser = () => {
   const [username, setUsername] = useState("");
@@ -21,7 +42,21 @@ const CreateUser = () => {
     reviewer: false,
     guest: false,
   });
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: createUser,
+    onSuccess: (data) => {
+      setShowSuccess(true);
+    },
+    onError: (error) => {
+      setErrorMessage(error.message);
+      setShowError(true);
+    },
+  });
 
   const handlePermissionChange = (event) => {
     setPermissions({
@@ -32,25 +67,28 @@ const CreateUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For now, just show the data and navigate back
     const selectedPermissions = Object.keys(permissions).filter(
       (key) => permissions[key]
     );
-    console.log({
+
+    mutation.mutate({
       username,
       password,
       permissions: selectedPermissions,
     });
-    alert(
-      `User ${username} created with permissions: ${selectedPermissions.join(
-        ", "
-      )}`
-    );
-    navigate("/");
   };
 
   const handleCancel = () => {
     navigate("/");
+  };
+
+  const handleSuccessClose = () => {
+    setShowSuccess(false);
+    navigate("/");
+  };
+
+  const handleErrorClose = () => {
+    setShowError(false);
   };
 
   return (
@@ -76,6 +114,7 @@ const CreateUser = () => {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              disabled={mutation.isPending}
             />
 
             <TextField
@@ -86,6 +125,7 @@ const CreateUser = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={mutation.isPending}
             />
 
             <Box className="create-user-permissions">
@@ -102,6 +142,7 @@ const CreateUser = () => {
                       checked={permissions.superuser}
                       onChange={handlePermissionChange}
                       name="superuser"
+                      disabled={mutation.isPending}
                     />
                   }
                   label="Superuser"
@@ -112,6 +153,7 @@ const CreateUser = () => {
                       checked={permissions.reviewer}
                       onChange={handlePermissionChange}
                       name="reviewer"
+                      disabled={mutation.isPending}
                     />
                   }
                   label="Reviewer"
@@ -122,6 +164,7 @@ const CreateUser = () => {
                       checked={permissions.guest}
                       onChange={handlePermissionChange}
                       name="guest"
+                      disabled={mutation.isPending}
                     />
                   }
                   label="Guest"
@@ -136,8 +179,13 @@ const CreateUser = () => {
                 color="primary"
                 size="large"
                 fullWidth
+                disabled={mutation.isPending}
               >
-                Create User
+                {mutation.isPending ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Create User"
+                )}
               </Button>
 
               <Button
@@ -146,6 +194,7 @@ const CreateUser = () => {
                 size="large"
                 fullWidth
                 onClick={handleCancel}
+                disabled={mutation.isPending}
               >
                 Cancel
               </Button>
@@ -153,6 +202,18 @@ const CreateUser = () => {
           </form>
         </Paper>
       </Box>
+
+      <SuccessPopup
+        open={showSuccess}
+        onClose={handleSuccessClose}
+        message={`User ${username} created successfully!`}
+      />
+
+      <ErrorPopup
+        open={showError}
+        onClose={handleErrorClose}
+        message={errorMessage}
+      />
     </Container>
   );
 };
