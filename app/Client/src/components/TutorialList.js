@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Table,
@@ -13,6 +13,9 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import LogoutDialog from "./LogoutDialog";
 import "./TutorialList.css";
 
 const fetchTutorials = async () => {
@@ -24,6 +27,10 @@ const fetchTutorials = async () => {
 };
 
 const TutorialList = () => {
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
   const {
     data: tutorials = [],
     isLoading,
@@ -35,11 +42,34 @@ const TutorialList = () => {
     enabled: false, // Don't fetch automatically on mount
   });
 
+  const handleLogoutClick = () => {
+    setShowLogoutDialog(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    logout();
+    navigate("/");
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutDialog(false);
+  };
+
   return (
     <Box className="tutorial-container">
-      <Typography variant="h4" className="tutorial-title">
-        Tutorials
-      </Typography>
+      <Box className="tutorial-header">
+        <Typography variant="h4" className="tutorial-title">
+          Tutorials
+        </Typography>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={handleLogoutClick}
+          className="tutorial-logout-button"
+        >
+          Logout
+        </Button>
+      </Box>
 
       <Button
         variant="contained"
@@ -84,6 +114,12 @@ const TutorialList = () => {
           No tutorials found. Click the button to fetch tutorials.
         </Typography>
       )}
+
+      <LogoutDialog
+        open={showLogoutDialog}
+        onClose={handleLogoutCancel}
+        onConfirm={handleLogoutConfirm}
+      />
     </Box>
   );
 };

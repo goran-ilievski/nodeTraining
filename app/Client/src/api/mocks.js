@@ -115,7 +115,7 @@ export const mockUserAPI = {
     return { message: "User was deleted successfully!" };
   },
 
-  login: async (username) => {
+  login: async ({ username, password }) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     const user = mockUsers.find((u) => u.username === username);
 
@@ -123,7 +123,16 @@ export const mockUserAPI = {
       throw new Error("Invalid credentials");
     }
 
-    return { id: user.id, username: user.username, role: user.role };
+    // Mock JWT token
+    const mockToken = `mock-jwt-token-${user.id}-${Date.now()}`;
+    localStorage.setItem("authToken", mockToken);
+
+    return {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      token: mockToken,
+    };
   },
 };
 

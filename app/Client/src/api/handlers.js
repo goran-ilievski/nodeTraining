@@ -76,15 +76,24 @@ export const userAPI = {
     return response.json();
   },
 
-  login: async (username) => {
-    const users = await userAPI.getAll();
-    const user = users.find((u) => u.username === username);
+  login: async ({ username, password }) => {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
-    if (!user) {
-      throw new Error("Invalid credentials");
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Invalid credentials");
     }
 
-    return { id: user.id, username: user.username, role: user.role };
+    const data = await response.json();
+    // Store token in localStorage
+    localStorage.setItem("authToken", data.token);
+    return data;
   },
 };
 

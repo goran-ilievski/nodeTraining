@@ -2,8 +2,19 @@
   padding: 1.5rem;
 }
 
+.tutorial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
 .tutorial-title {
-  margin-bottom: 1rem;
+  margin: 0;
+}
+
+.tutorial-logout-button {
+  margin-left: 1rem;
 }
 
 .tutorial-button {

@@ -44,7 +44,7 @@ const LandingPage = () => {
       return;
     }
 
-    loginMutation.mutate(username);
+    loginMutation.mutate({ username, password });
   };
 
   const handleCreateUser = () => {
