@@ -8,7 +8,6 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import WarningIcon from "@mui/icons-material/Warning";
 import "./ErrorBoundary.css";
 
 class ErrorBoundary extends React.Component {
@@ -40,7 +39,7 @@ class ErrorBoundary extends React.Component {
         <Dialog open={true} maxWidth="sm" fullWidth>
           <DialogContent className="error-boundary-content">
             <Box className="error-boundary-icon-container">
-              <WarningIcon className="error-boundary-icon" />
+              <span className="error-boundary-icon">⚠️</span>
             </Box>
             <DialogTitle className="error-boundary-title">
               Oops! Something went wrong

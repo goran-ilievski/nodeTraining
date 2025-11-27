@@ -8,7 +8,6 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import ErrorIcon from "@mui/icons-material/Error";
 import "./ErrorPopup.css";
 
 const ErrorPopup = ({ open, onClose, message }) => {
@@ -16,7 +15,7 @@ const ErrorPopup = ({ open, onClose, message }) => {
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogContent className="error-popup-content">
         <Box className="error-popup-icon-container">
-          <ErrorIcon className="error-popup-icon" />
+          <span className="error-popup-icon">❌</span>
         </Box>
         <DialogTitle className="error-popup-title">Error</DialogTitle>
         <Typography className="error-popup-message">

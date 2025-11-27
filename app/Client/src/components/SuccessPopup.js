@@ -8,7 +8,6 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import "./SuccessPopup.css";
 
 const SuccessPopup = ({ open, onClose, message }) => {
@@ -16,7 +15,7 @@ const SuccessPopup = ({ open, onClose, message }) => {
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogContent className="success-popup-content">
         <Box className="success-popup-icon-container">
-          <CheckCircleIcon className="success-popup-icon" />
+          <span className="success-popup-icon">✅</span>
         </Box>
         <DialogTitle className="success-popup-title">Success!</DialogTitle>
         <Typography className="success-popup-message">
