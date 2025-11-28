@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "../../context/AuthContext";
-import { userAPI } from "../../api/handlers";
+import { userAPI } from "../../api";
 import LoadingSpinner from "../LoadingSpinner";
 import SuccessPopup from "../SuccessPopup";
 import ErrorPopup from "../ErrorPopup";

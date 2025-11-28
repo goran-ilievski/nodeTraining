@@ -13,26 +13,12 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { tutorialAPI, Tutorial } from "../../api";
 import "./TutorialList.styled.css";
-
-interface Tutorial {
-  id: number;
-  title: string;
-  description: string;
-  published: boolean;
-}
 
 interface TutorialListProps {
   onNavigate: (view: string) => void;
 }
-
-const fetchTutorials = async (): Promise<Tutorial[]> => {
-  const response = await fetch("http://localhost:8080/api/tutorials");
-  if (!response.ok) {
-    throw new Error("Failed to fetch tutorials");
-  }
-  return response.json();
-};
 
 const TutorialList: React.FC<TutorialListProps> = () => {
   const {
@@ -41,7 +27,7 @@ const TutorialList: React.FC<TutorialListProps> = () => {
     error,
   } = useQuery({
     queryKey: ["tutorials"],
-    queryFn: fetchTutorials,
+    queryFn: tutorialAPI.getAll,
     enabled: true,
   });
 

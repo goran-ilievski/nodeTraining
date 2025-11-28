@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../../context/AuthContext";
-import { userAPI } from "../../api/handlers";
+import { userAPI } from "../../api";
 import LoadingSpinner from "../LoadingSpinner";
 import ErrorPopup from "../ErrorPopup";
 import "./LandingPage.styled.css";

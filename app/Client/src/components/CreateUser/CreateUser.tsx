@@ -12,7 +12,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { userAPI } from "../../api/handlers";
+import { userAPI } from "../../api";
 import SuccessPopup from "../SuccessPopup";
 import ErrorPopup from "../ErrorPopup";
 import LoadingSpinner from "../LoadingSpinner";
