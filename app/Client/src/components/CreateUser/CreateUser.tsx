@@ -16,7 +16,7 @@ import { userAPI } from "../../api/handlers";
 import SuccessPopup from "../SuccessPopup";
 import ErrorPopup from "../ErrorPopup";
 import LoadingSpinner from "../LoadingSpinner";
-import "./styles.css";
+import "./CreateUser.styled.css";
 
 interface CreateUserProps {
   onNavigate: (view: string) => void;

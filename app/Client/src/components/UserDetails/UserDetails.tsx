@@ -18,7 +18,7 @@ import { userAPI } from "../../api/handlers";
 import LoadingSpinner from "../LoadingSpinner";
 import SuccessPopup from "../SuccessPopup";
 import ErrorPopup from "../ErrorPopup";
-import "./styles.css";
+import "./UserDetails.styled.css";
 
 interface UserDetailsProps {
   onNavigate: (view: string) => void;

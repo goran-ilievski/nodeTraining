@@ -7,7 +7,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import "./styles.css";
+import "./LogoutDialog.styled.css";
 
 interface LogoutDialogProps {
   open: boolean;

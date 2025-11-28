@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, CircularProgress, Box } from "@mui/material";
-import "./styles.css";
+import "./LoadingSpinner.styled.css";
 
 interface LoadingSpinnerProps {
   open: boolean;

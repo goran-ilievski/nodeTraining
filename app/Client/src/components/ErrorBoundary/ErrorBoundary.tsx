@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import "./styles.css";
+import "./ErrorBoundary.styled.css";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;

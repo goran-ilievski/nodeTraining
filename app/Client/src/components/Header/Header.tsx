@@ -9,7 +9,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
-import "./styles.css";
+import "./Header.styled.css";
 
 interface HeaderProps {
   onNavigate: (view: string) => void;

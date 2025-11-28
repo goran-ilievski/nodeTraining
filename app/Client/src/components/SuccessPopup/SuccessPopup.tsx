@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import "./styles.css";
+import "./SuccessPopup.styled.css";
 
 interface SuccessPopupProps {
   open: boolean;

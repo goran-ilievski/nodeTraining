@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import "./styles.css";
+import "./ErrorPopup.styled.css";
 
 interface ErrorPopupProps {
   open: boolean;

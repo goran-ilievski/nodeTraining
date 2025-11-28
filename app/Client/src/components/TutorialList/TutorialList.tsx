@@ -15,7 +15,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../context/AuthContext";
 import LogoutDialog from "../LogoutDialog";
-import "./styles.css";
+import "./TutorialList.styled.css";
 
 interface Tutorial {
   id: number;

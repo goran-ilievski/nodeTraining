@@ -12,7 +12,7 @@ import { useAuth } from "../../context/AuthContext";
 import { userAPI } from "../../api/handlers";
 import LoadingSpinner from "../LoadingSpinner";
 import ErrorPopup from "../ErrorPopup";
-import "./styles.css";
+import "./LandingPage.styled.css";
 
 interface LandingPageProps {
   onNavigate: (view: string) => void;
