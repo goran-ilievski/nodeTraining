@@ -9,6 +9,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
+import LogoutDialog from "../LogoutDialog";
 import "./Header.styled.css";
 
 interface HeaderProps {
@@ -18,6 +19,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const { user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const handleSettingsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (user?.role === "superuser") {
@@ -38,9 +40,17 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
     onNavigate("user-details");
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutDialog(true);
+  };
+
+  const handleLogoutConfirm = () => {
     logout();
     onNavigate("login");
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutDialog(false);
   };
 
   if (!user) return null;
@@ -94,13 +104,19 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
 
           <Button
             color="inherit"
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
             className="header-button"
           >
             Logout
           </Button>
         </Box>
       </Toolbar>
+
+      <LogoutDialog
+        open={showLogoutDialog}
+        onConfirm={handleLogoutConfirm}
+        onCancel={handleLogoutCancel}
+      />
     </AppBar>
   );
 };

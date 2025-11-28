@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Table,
@@ -13,8 +13,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "../../context/AuthContext";
-import LogoutDialog from "../LogoutDialog";
 import "./TutorialList.styled.css";
 
 interface Tutorial {
@@ -37,9 +35,6 @@ const fetchTutorials = async (): Promise<Tutorial[]> => {
 };
 
 const TutorialList: React.FC<TutorialListProps> = ({ onNavigate }) => {
-  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const { logout } = useAuth();
-
   const {
     data: tutorials = [],
     isLoading,
@@ -51,33 +46,12 @@ const TutorialList: React.FC<TutorialListProps> = ({ onNavigate }) => {
     enabled: false,
   });
 
-  const handleLogoutClick = () => {
-    setShowLogoutDialog(true);
-  };
-
-  const handleLogoutConfirm = () => {
-    logout();
-    onNavigate("login");
-  };
-
-  const handleLogoutCancel = () => {
-    setShowLogoutDialog(false);
-  };
-
   return (
     <Box className="tutorial-container">
       <Box className="tutorial-header">
         <Typography variant="h4" className="tutorial-title">
           Tutorials
         </Typography>
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={handleLogoutClick}
-          className="tutorial-logout-button"
-        >
-          Logout
-        </Button>
       </Box>
 
       <Button
@@ -125,12 +99,6 @@ const TutorialList: React.FC<TutorialListProps> = ({ onNavigate }) => {
           No tutorials found. Click the button to fetch tutorials.
         </Typography>
       )}
-
-      <LogoutDialog
-        open={showLogoutDialog}
-        onClose={handleLogoutCancel}
-        onConfirm={handleLogoutConfirm}
-      />
     </Box>
   );
 };
