@@ -34,7 +34,7 @@ const fetchTutorials = async (): Promise<Tutorial[]> => {
   return response.json();
 };
 
-const TutorialList: React.FC<TutorialListProps> = ({ onNavigate }) => {
+const TutorialList: React.FC<TutorialListProps> = () => {
   const {
     data: tutorials = [],
     isLoading,

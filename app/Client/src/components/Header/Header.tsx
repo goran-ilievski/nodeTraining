@@ -115,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
       <LogoutDialog
         open={showLogoutDialog}
         onConfirm={handleLogoutConfirm}
-        onCancel={handleLogoutCancel}
+        onClose={handleLogoutCancel}
       />
     </AppBar>
   );
