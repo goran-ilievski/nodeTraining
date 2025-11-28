@@ -8,11 +8,13 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { withTranslation, WithTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import "./ErrorBoundary.styled.css";
 
-interface ErrorBoundaryProps extends WithTranslation {
+interface ErrorBoundaryProps {
   children: React.ReactNode;
+  t: TFunction;
 }
 
 interface ErrorBoundaryState {
@@ -48,9 +50,9 @@ class ErrorBoundary extends React.Component<
   };
 
   render() {
-    if (this.state.hasError) {
-      const t = this.props.t || ((key: string) => key);
+    const { t } = this.props;
 
+    if (this.state.hasError) {
       return (
         <Dialog open={true} maxWidth="sm" fullWidth>
           <DialogContent className="error-boundary-content">
