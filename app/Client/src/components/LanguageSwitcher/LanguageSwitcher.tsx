@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Button, Menu, MenuItem, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import "flag-icons/css/flag-icons.min.css";
 import "./LanguageSwitcher.styled.css";
 
 interface Language {
   code: string;
   name: string;
-  flag: string;
+  flagCode: string;
 }
 
 const languages: Language[] = [
-  { code: "en", name: "English", flag: "🇬🇧" },
-  { code: "mk", name: "Македонски", flag: "🇲🇰" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "en", name: "English", flagCode: "gb" },
+  { code: "mk", name: "Македонски", flagCode: "mk" },
+  { code: "de", name: "Deutsch", flagCode: "de" },
+  { code: "fr", name: "Français", flagCode: "fr" },
 ];
 
 const LanguageSwitcher: React.FC = () => {
@@ -44,7 +45,7 @@ const LanguageSwitcher: React.FC = () => {
         className="language-button"
         size="small"
       >
-        <span className="flag">{currentLanguage.flag}</span>
+        <span className={`fi fi-${currentLanguage.flagCode} flag-icon`}></span>
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -58,7 +59,7 @@ const LanguageSwitcher: React.FC = () => {
             onClick={() => changeLanguage(lang.code)}
             selected={lang.code === i18n.language}
           >
-            <span className="flag">{lang.flag}</span>
+            <span className={`fi fi-${lang.flagCode} flag-icon-menu`}></span>
             <span className="lang-name">{lang.name}</span>
           </MenuItem>
         ))}
