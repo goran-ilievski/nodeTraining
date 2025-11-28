@@ -1,5 +1,6 @@
 .public-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: #1976d2 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
 
 .public-header-toolbar {
@@ -7,6 +8,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 24px !important;
+  min-height: 64px !important;
 }
 
 .public-header-title {
@@ -18,4 +20,14 @@
 .public-header-language {
   display: flex;
   align-items: center;
+}
+
+.public-header-language .language-button {
+  background-color: white !important;
+  color: #1976d2 !important;
+  border: 2px solid white !important;
+}
+
+.public-header-language .language-button:hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
 }

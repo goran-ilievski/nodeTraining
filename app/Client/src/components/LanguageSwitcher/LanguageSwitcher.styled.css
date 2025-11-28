@@ -4,28 +4,26 @@
 }
 
 .language-button {
-  min-width: 80px !important;
-  font-weight: 600 !important;
+  min-width: 48px !important;
+  height: 48px !important;
+  padding: 8px !important;
   display: flex !important;
-  gap: 6px !important;
   align-items: center !important;
-  padding: 4px 12px !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
 }
 
 .language-button .flag {
-  font-size: 18px;
-}
-
-.language-button .lang-code {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .language-menu .flag {
-  font-size: 18px;
-  margin-right: 8px;
+  font-size: 20px;
+  margin-right: 12px;
 }
 
 .language-menu .lang-name {
   font-size: 14px;
+  font-weight: 500;
 }

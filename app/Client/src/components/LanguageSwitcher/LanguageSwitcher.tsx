@@ -45,7 +45,6 @@ const LanguageSwitcher: React.FC = () => {
         size="small"
       >
         <span className="flag">{currentLanguage.flag}</span>
-        <span className="lang-code">{currentLanguage.code.toUpperCase()}</span>
       </Button>
       <Menu
         anchorEl={anchorEl}
