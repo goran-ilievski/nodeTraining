@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +12,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { tutorialAPI, Tutorial } from "../../api";
+import { tutorialAPI } from "../../api";
 import "./TutorialList.styled.css";
 
 interface TutorialListProps {
