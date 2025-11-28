@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import LogoutDialog from "../LogoutDialog";
+import LanguageSwitcher from "../LanguageSwitcher";
 import "./Header.styled.css";
 
 interface HeaderProps {
@@ -10,6 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const handleUserPanel = () => {
@@ -39,10 +42,12 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
     <AppBar position="static" className="header">
       <Toolbar className="header-toolbar">
         <Typography variant="h6" className="header-title">
-          Tutorial App
+          {t("app.title")}
         </Typography>
 
         <Box className="header-user-section">
+          <LanguageSwitcher />
+
           <Box className="header-user-info">
             <Typography variant="body1" className="header-username">
               {user.username}
@@ -58,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
               onClick={handleUserPanel}
               className="header-button"
             >
-              User Settings
+              {t("header.userSettings")}
             </Button>
           )}
 
@@ -67,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             onClick={handleUserDetails}
             className="header-button"
           >
-            User Details
+            {t("header.userDetails")}
           </Button>
 
           <Button
@@ -75,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             onClick={handleLogoutClick}
             className="header-button"
           >
-            Logout
+            {t("header.logout")}
           </Button>
         </Box>
       </Toolbar>

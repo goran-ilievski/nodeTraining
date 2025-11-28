@@ -1,0 +1,10 @@
+.language-switcher {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.language-switcher button {
+  min-width: 50px;
+  font-weight: 600;
+}

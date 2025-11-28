@@ -12,6 +12,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { tutorialAPI } from "../../api";
 import "./TutorialList.styled.css";
 
@@ -20,6 +21,7 @@ interface TutorialListProps {
 }
 
 const TutorialList: React.FC<TutorialListProps> = () => {
+  const { t } = useTranslation();
   const {
     data: tutorials = [],
     isLoading,
@@ -34,14 +36,16 @@ const TutorialList: React.FC<TutorialListProps> = () => {
     <Box className="tutorial-container">
       <Box className="tutorial-header">
         <Typography variant="h4" className="tutorial-title">
-          Tutorials
+          {t("tutorials.title")}
         </Typography>
       </Box>
 
       {isLoading && <CircularProgress />}
 
       {error && (
-        <Typography color="error">Error: {(error as Error).message}</Typography>
+        <Typography color="error">
+          {t("tutorials.errorFetching")}: {(error as Error).message}
+        </Typography>
       )}
 
       {tutorials.length > 0 && (
@@ -49,10 +53,10 @@ const TutorialList: React.FC<TutorialListProps> = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Title</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Published</TableCell>
+                <TableCell>{t("tutorials.id")}</TableCell>
+                <TableCell>{t("tutorials.titleColumn")}</TableCell>
+                <TableCell>{t("tutorials.description")}</TableCell>
+                <TableCell>{t("tutorials.published")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -61,7 +65,11 @@ const TutorialList: React.FC<TutorialListProps> = () => {
                   <TableCell>{tutorial.id}</TableCell>
                   <TableCell>{tutorial.title}</TableCell>
                   <TableCell>{tutorial.description}</TableCell>
-                  <TableCell>{tutorial.published ? "Yes" : "No"}</TableCell>
+                  <TableCell>
+                    {tutorial.published
+                      ? t("tutorials.yes")
+                      : t("tutorials.no")}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -71,7 +79,7 @@ const TutorialList: React.FC<TutorialListProps> = () => {
 
       {!isLoading && tutorials.length === 0 && !error && (
         <Typography className="tutorial-empty-message">
-          No tutorials available.
+          {t("tutorials.noTutorials")}
         </Typography>
       )}
     </Box>

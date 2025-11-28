@@ -8,9 +8,10 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { withTranslation, WithTranslation } from "react-i18next";
 import "./ErrorBoundary.styled.css";
 
-interface ErrorBoundaryProps {
+interface ErrorBoundaryProps extends WithTranslation {
   children: React.ReactNode;
 }
 
@@ -47,6 +48,8 @@ class ErrorBoundary extends React.Component<
   };
 
   render() {
+    const { t } = this.props;
+
     if (this.state.hasError) {
       return (
         <Dialog open={true} maxWidth="sm" fullWidth>
@@ -55,11 +58,10 @@ class ErrorBoundary extends React.Component<
               <span className="error-boundary-icon">⚠️</span>
             </Box>
             <DialogTitle className="error-boundary-title">
-              Oops! Something went wrong
+              {t("errorBoundary.title")}
             </DialogTitle>
             <Typography className="error-boundary-message">
-              We're sorry, but something unexpected happened. Please try again
-              later or contact support if the problem persists.
+              {t("errorBoundary.message")}
             </Typography>
           </DialogContent>
           <DialogActions className="error-boundary-actions">
@@ -70,7 +72,7 @@ class ErrorBoundary extends React.Component<
               fullWidth
               size="large"
             >
-              Go to Home
+              {t("errorBoundary.goHome")}
             </Button>
           </DialogActions>
         </Dialog>
@@ -81,4 +83,4 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-export default ErrorBoundary;
+export default withTranslation()(ErrorBoundary);

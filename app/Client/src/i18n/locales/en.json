@@ -1,0 +1,89 @@
+{
+  "app": {
+    "title": "Tutorial App"
+  },
+  "header": {
+    "userSettings": "User Settings",
+    "userDetails": "User Details",
+    "logout": "Logout"
+  },
+  "landing": {
+    "welcome": "Welcome to Tutorial Manager",
+    "subtitle": "Manage your tutorials efficiently",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign Up"
+  },
+  "createUser": {
+    "title": "Create New User",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "role": "Role",
+    "selectRole": "Select a role",
+    "createUser": "Create User",
+    "alreadyHaveAccount": "Already have an account?",
+    "goToLogin": "Go to Login",
+    "success": "User created successfully!",
+    "error": "Failed to create user"
+  },
+  "tutorials": {
+    "title": "Tutorials",
+    "id": "ID",
+    "titleColumn": "Title",
+    "description": "Description",
+    "published": "Published",
+    "yes": "Yes",
+    "no": "No",
+    "noTutorials": "No tutorials available.",
+    "errorFetching": "Error"
+  },
+  "userPanel": {
+    "title": "User Management",
+    "id": "ID",
+    "username": "Username",
+    "email": "Email",
+    "role": "Role",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "noUsers": "No users found.",
+    "errorFetching": "Error",
+    "deleteSuccess": "User deleted successfully",
+    "deleteError": "Failed to delete user"
+  },
+  "userDetails": {
+    "title": "User Details",
+    "username": "Username",
+    "email": "Email",
+    "role": "Role",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "editMode": "Edit Mode",
+    "viewMode": "View Mode",
+    "save": "Save Changes",
+    "cancel": "Cancel",
+    "updateSuccess": "User updated successfully!",
+    "updateError": "Failed to update user"
+  },
+  "logout": {
+    "title": "Confirm Logout",
+    "message": "Are you sure you want to logout?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "errorBoundary": {
+    "title": "Oops! Something went wrong",
+    "message": "We're sorry, but something unexpected happened. Please try again later or contact support if the problem persists.",
+    "goHome": "Go to Home"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "close": "Close"
+  }
+}

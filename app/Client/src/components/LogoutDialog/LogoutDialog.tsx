@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import "./LogoutDialog.styled.css";
 
 interface LogoutDialogProps {
@@ -20,18 +21,22 @@ const LogoutDialog: React.FC<LogoutDialogProps> = ({
   onClose,
   onConfirm,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle className="logout-dialog-title">Confirm Logout</DialogTitle>
+      <DialogTitle className="logout-dialog-title">
+        {t("logout.title")}
+      </DialogTitle>
       <DialogContent className="logout-dialog-content">
-        <Typography>Are you sure you want to logout?</Typography>
+        <Typography>{t("logout.message")}</Typography>
       </DialogContent>
       <DialogActions className="logout-dialog-actions">
         <Button onClick={onClose} variant="outlined" color="secondary">
-          No
+          {t("logout.no")}
         </Button>
         <Button onClick={onConfirm} variant="contained" color="primary">
-          Yes
+          {t("logout.yes")}
         </Button>
       </DialogActions>
     </Dialog>
