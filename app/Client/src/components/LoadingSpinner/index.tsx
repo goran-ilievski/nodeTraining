@@ -1,8 +1,12 @@
 import React from "react";
 import { Dialog, CircularProgress, Box } from "@mui/material";
-import "./LoadingSpinner.css";
+import "./styles.css";
 
-const LoadingSpinner = ({ open }) => {
+interface LoadingSpinnerProps {
+  open: boolean;
+}
+
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ open }) => {
   return (
     <Dialog
       open={open}

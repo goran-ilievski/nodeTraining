@@ -7,9 +7,19 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import "./LogoutDialog.css";
+import "./styles.css";
 
-const LogoutDialog = ({ open, onClose, onConfirm }) => {
+interface LogoutDialogProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}
+
+const LogoutDialog: React.FC<LogoutDialogProps> = ({
+  open,
+  onClose,
+  onConfirm,
+}) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogTitle className="logout-dialog-title">Confirm Logout</DialogTitle>

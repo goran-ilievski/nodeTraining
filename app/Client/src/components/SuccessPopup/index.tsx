@@ -8,9 +8,19 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import "./SuccessPopup.css";
+import "./styles.css";
 
-const SuccessPopup = ({ open, onClose, message }) => {
+interface SuccessPopupProps {
+  open: boolean;
+  onClose: () => void;
+  message: string;
+}
+
+const SuccessPopup: React.FC<SuccessPopupProps> = ({
+  open,
+  onClose,
+  message,
+}) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogContent className="success-popup-content">

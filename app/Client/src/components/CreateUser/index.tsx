@@ -12,13 +12,17 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { userAPI } from "../api/handlers";
-import SuccessPopup from "./SuccessPopup";
-import ErrorPopup from "./ErrorPopup";
-import LoadingSpinner from "./LoadingSpinner";
-import "./CreateUser.css";
+import { userAPI } from "../../api/handlers";
+import SuccessPopup from "../SuccessPopup";
+import ErrorPopup from "../ErrorPopup";
+import LoadingSpinner from "../LoadingSpinner";
+import "./styles.css";
 
-const CreateUser = ({ onNavigate }) => {
+interface CreateUserProps {
+  onNavigate: (view: string) => void;
+}
+
+const CreateUser: React.FC<CreateUserProps> = ({ onNavigate }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
@@ -29,16 +33,16 @@ const CreateUser = ({ onNavigate }) => {
 
   const mutation = useMutation({
     mutationFn: userAPI.create,
-    onSuccess: (data) => {
+    onSuccess: () => {
       setShowSuccess(true);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       setErrorMessage(error.message);
       setShowError(true);
     },
   });
 
-  const validatePassword = (value) => {
+  const validatePassword = (value: string): string => {
     const minLength = 8;
     const hasCapital = /[A-Z]/.test(value);
     const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
@@ -55,16 +59,15 @@ const CreateUser = ({ onNavigate }) => {
     return "";
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
     setPasswordError(validatePassword(value));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Frontend validation
     if (!username || !password || !role) {
       setErrorMessage("All fields are required!");
       setShowError(true);

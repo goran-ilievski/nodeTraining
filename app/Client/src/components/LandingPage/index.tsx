@@ -8,13 +8,17 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { useAuth } from "../context/AuthContext";
-import { userAPI } from "../api/handlers";
-import LoadingSpinner from "./LoadingSpinner";
-import ErrorPopup from "./ErrorPopup";
-import "./LandingPage.css";
+import { useAuth } from "../../context/AuthContext";
+import { userAPI } from "../../api/handlers";
+import LoadingSpinner from "../LoadingSpinner";
+import ErrorPopup from "../ErrorPopup";
+import "./styles.css";
 
-const LandingPage = ({ onNavigate }) => {
+interface LandingPageProps {
+  onNavigate: (view: string) => void;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
@@ -27,13 +31,13 @@ const LandingPage = ({ onNavigate }) => {
       login(data);
       onNavigate("tutorials");
     },
-    onError: (error) => {
+    onError: (error: any) => {
       setErrorMessage(error.message || "Login failed");
       setShowError(true);
     },
   });
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!username || !password) {

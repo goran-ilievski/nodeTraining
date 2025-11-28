@@ -13,14 +13,26 @@ import {
   Box,
 } from "@mui/material";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "../context/AuthContext";
-import { userAPI } from "../api/handlers";
-import LoadingSpinner from "./LoadingSpinner";
-import SuccessPopup from "./SuccessPopup";
-import ErrorPopup from "./ErrorPopup";
-import "./UserPanel.css";
+import { useAuth } from "../../context/AuthContext";
+import { userAPI } from "../../api/handlers";
+import LoadingSpinner from "../LoadingSpinner";
+import SuccessPopup from "../SuccessPopup";
+import ErrorPopup from "../ErrorPopup";
+import "./styles.css";
 
-const UserPanel = ({ onNavigate }) => {
+interface User {
+  id: number;
+  username: string;
+  role: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface UserPanelProps {
+  onNavigate: (view: string) => void;
+}
+
+const UserPanel: React.FC<UserPanelProps> = ({ onNavigate }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [showSuccess, setShowSuccess] = React.useState(false);
@@ -28,7 +40,7 @@ const UserPanel = ({ onNavigate }) => {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [deletedUsername, setDeletedUsername] = React.useState("");
 
-  const { data: users, isLoading } = useQuery({
+  const { data: users, isLoading } = useQuery<User[]>({
     queryKey: ["users"],
     queryFn: userAPI.getAll,
   });
@@ -36,10 +48,10 @@ const UserPanel = ({ onNavigate }) => {
   const deleteMutation = useMutation({
     mutationFn: userAPI.delete,
     onSuccess: () => {
-      queryClient.invalidateQueries(["users"]);
+      queryClient.invalidateQueries({ queryKey: ["users"] });
       setShowSuccess(true);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       setErrorMessage(error.message);
       setShowError(true);
     },
@@ -59,10 +71,11 @@ const UserPanel = ({ onNavigate }) => {
     );
   }
 
-  const handleUpdate = (userId) => {
+  const handleUpdate = (userId: number) => {
     onNavigate(`user-details-${userId}`);
   };
-  const handleDelete = (userId, username) => {
+
+  const handleDelete = (userId: number, username: string) => {
     setDeletedUsername(username);
     deleteMutation.mutate(userId);
   };

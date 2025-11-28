@@ -13,11 +13,22 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "../context/AuthContext";
-import LogoutDialog from "./LogoutDialog";
-import "./TutorialList.css";
+import { useAuth } from "../../context/AuthContext";
+import LogoutDialog from "../LogoutDialog";
+import "./styles.css";
 
-const fetchTutorials = async () => {
+interface Tutorial {
+  id: number;
+  title: string;
+  description: string;
+  published: boolean;
+}
+
+interface TutorialListProps {
+  onNavigate: (view: string) => void;
+}
+
+const fetchTutorials = async (): Promise<Tutorial[]> => {
   const response = await fetch("http://localhost:8080/api/tutorials");
   if (!response.ok) {
     throw new Error("Failed to fetch tutorials");
@@ -25,7 +36,7 @@ const fetchTutorials = async () => {
   return response.json();
 };
 
-const TutorialList = ({ onNavigate }) => {
+const TutorialList: React.FC<TutorialListProps> = ({ onNavigate }) => {
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const { logout } = useAuth();
 
@@ -37,7 +48,7 @@ const TutorialList = ({ onNavigate }) => {
   } = useQuery({
     queryKey: ["tutorials"],
     queryFn: fetchTutorials,
-    enabled: false, // Don't fetch automatically on mount
+    enabled: false,
   });
 
   const handleLogoutClick = () => {
@@ -80,7 +91,9 @@ const TutorialList = ({ onNavigate }) => {
 
       {isLoading && <CircularProgress />}
 
-      {error && <Typography color="error">Error: {error.message}</Typography>}
+      {error && (
+        <Typography color="error">Error: {(error as Error).message}</Typography>
+      )}
 
       {tutorials.length > 0 && (
         <TableContainer component={Paper}>

@@ -8,14 +8,18 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { useAuth } from "../context/AuthContext";
-import "./Header.css";
+import { useAuth } from "../../context/AuthContext";
+import "./styles.css";
 
-const Header = ({ onNavigate }) => {
+interface HeaderProps {
+  onNavigate: (view: string) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const { user, logout } = useAuth();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleSettingsClick = (event) => {
+  const handleSettingsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (user?.role === "superuser") {
       setAnchorEl(event.currentTarget);
     }

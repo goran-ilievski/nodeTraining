@@ -10,16 +10,22 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useAuth } from "../context/AuthContext";
-import { userAPI } from "../api/handlers";
-import LoadingSpinner from "./LoadingSpinner";
-import SuccessPopup from "./SuccessPopup";
-import ErrorPopup from "./ErrorPopup";
-import "./UserDetails.css";
+import { useAuth } from "../../context/AuthContext";
+import { userAPI } from "../../api/handlers";
+import LoadingSpinner from "../LoadingSpinner";
+import SuccessPopup from "../SuccessPopup";
+import ErrorPopup from "../ErrorPopup";
+import "./styles.css";
 
-const UserDetails = ({ onNavigate, userId }) => {
+interface UserDetailsProps {
+  onNavigate: (view: string) => void;
+  userId?: string | null;
+}
+
+const UserDetails: React.FC<UserDetailsProps> = ({ onNavigate, userId }) => {
   const { user: currentUser } = useAuth();
   const targetUserId = userId || currentUser?.id;
 
@@ -33,12 +39,8 @@ const UserDetails = ({ onNavigate, userId }) => {
 
   const { data: userData, isLoading } = useQuery({
     queryKey: ["user", targetUserId],
-    queryFn: () => userAPI.getById(targetUserId),
+    queryFn: () => userAPI.getById(targetUserId!),
     enabled: !!targetUserId,
-    onSuccess: (data) => {
-      setUsername(data.username);
-      setRole(data.role);
-    },
   });
 
   React.useEffect(() => {
@@ -53,13 +55,13 @@ const UserDetails = ({ onNavigate, userId }) => {
     onSuccess: () => {
       setShowSuccess(true);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       setErrorMessage(error.message);
       setShowError(true);
     },
   });
 
-  const validatePassword = (value) => {
+  const validatePassword = (value: string): string => {
     if (!value) return "";
     const minLength = 8;
     const hasCapital = /[A-Z]/.test(value);
@@ -77,13 +79,13 @@ const UserDetails = ({ onNavigate, userId }) => {
     return "";
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
     setPasswordError(validatePassword(value));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!username || !role) {
@@ -103,15 +105,15 @@ const UserDetails = ({ onNavigate, userId }) => {
     const updateData = {
       username,
       role,
-      password: password || userData.password,
+      password: password || userData?.password || "",
     };
 
-    mutation.mutate({ userId: targetUserId, userData: updateData });
+    mutation.mutate({ userId: targetUserId!, userData: updateData });
   };
 
   const handleSuccessClose = () => {
     setShowSuccess(false);
-    if (currentUser.role === "superuser" && userId) {
+    if (currentUser?.role === "superuser" && userId) {
       onNavigate("user-panel");
     }
   };
@@ -181,7 +183,7 @@ const UserDetails = ({ onNavigate, userId }) => {
               <Select
                 value={role}
                 label="Role"
-                onChange={(e) => setRole(e.target.value)}
+                onChange={(e: SelectChangeEvent) => setRole(e.target.value)}
                 disabled={mutation.isPending || !canEditRole}
               >
                 <MenuItem value="superuser">Superuser</MenuItem>
@@ -208,7 +210,7 @@ const UserDetails = ({ onNavigate, userId }) => {
                 size="large"
                 fullWidth
                 onClick={() =>
-                  currentUser.role === "superuser" && userId
+                  currentUser?.role === "superuser" && userId
                     ? onNavigate("user-panel")
                     : onNavigate("tutorials")
                 }

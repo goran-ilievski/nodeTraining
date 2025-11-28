@@ -8,9 +8,15 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import "./ErrorPopup.css";
+import "./styles.css";
 
-const ErrorPopup = ({ open, onClose, message }) => {
+interface ErrorPopupProps {
+  open: boolean;
+  onClose: () => void;
+  message: string;
+}
+
+const ErrorPopup: React.FC<ErrorPopupProps> = ({ open, onClose, message }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogContent className="error-popup-content">

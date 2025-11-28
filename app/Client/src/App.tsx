@@ -15,17 +15,18 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: (failureCount, error) => {
+      retry: (failureCount: number, error: any) => {
         // Only retry on 500 errors, max 3 times
         if (error?.message?.includes("500") || error?.status === 500) {
           return failureCount < 3;
         }
         return false;
       },
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
+      retryDelay: (attemptIndex: number) =>
+        Math.min(1000 * 2 ** attemptIndex, 10000),
     },
     mutations: {
-      retry: (failureCount, error) => {
+      retry: (failureCount: number, error: any) => {
         // Only retry on 500 errors, max 3 times
         if (error?.message?.includes("500") || error?.status === 500) {
           return failureCount < 3;
@@ -39,10 +40,10 @@ const queryClient = new QueryClient({
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
-  const [currentView, setCurrentView] = useState("login");
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [currentView, setCurrentView] = useState<string>("login");
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
-  const handleNavigate = (view) => {
+  const handleNavigate = (view: string) => {
     if (view.startsWith("user-details-")) {
       const userId = view.replace("user-details-", "");
       setSelectedUserId(userId);

@@ -4,13 +4,28 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  ReactNode,
 } from "react";
 
-const AuthContext = createContext();
+interface User {
+  id: number;
+  username: string;
+  role: string;
+  token?: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  login: (userData: User) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const IDLE_TIMEOUT = 15 * 60 * 1000; // 15 minutes in milliseconds
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
@@ -18,9 +33,13 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [idleTimer, setIdleTimer] = useState(null);
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [idleTimer, setIdleTimer] = useState<NodeJS.Timeout | null>(null);
 
   const logout = useCallback(() => {
     setUser(null);
@@ -46,7 +65,7 @@ export const AuthProvider = ({ children }) => {
   }, [user, logout, idleTimer]);
 
   const login = useCallback(
-    (userData) => {
+    (userData: User) => {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
       resetIdleTimer();
@@ -83,10 +102,11 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("authToken");
 
     if (storedUser && token) {
-      const userData = JSON.parse(storedUser);
+      const userData: User = JSON.parse(storedUser);
       setUser(userData);
       resetIdleTimer();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Cleanup timer on unmount
@@ -98,7 +118,7 @@ export const AuthProvider = ({ children }) => {
     };
   }, [idleTimer]);
 
-  const value = {
+  const value: AuthContextType = {
     user,
     login,
     logout,
