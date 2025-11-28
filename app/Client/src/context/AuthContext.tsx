@@ -68,6 +68,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     (userData: User) => {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
+      if (userData.token) {
+        localStorage.setItem("authToken", userData.token);
+      }
       resetIdleTimer();
     },
     [resetIdleTimer]
@@ -102,9 +105,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const token = localStorage.getItem("authToken");
 
     if (storedUser && token) {
-      const userData: User = JSON.parse(storedUser);
-      setUser(userData);
-      resetIdleTimer();
+      try {
+        const userData: User = JSON.parse(storedUser);
+        setUser(userData);
+        resetIdleTimer();
+      } catch (error) {
+        // If parsing fails, clear invalid data
+        localStorage.removeItem("user");
+        localStorage.removeItem("authToken");
+      }
+    } else {
+      // Clear any partial data
+      localStorage.removeItem("user");
+      localStorage.removeItem("authToken");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
