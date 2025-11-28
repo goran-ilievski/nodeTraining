@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+} from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import LogoutDialog from "../LogoutDialog";
@@ -14,6 +22,10 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const { user, logout } = useAuth();
   const { t } = useTranslation();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+
+  const handleHome = () => {
+    onNavigate("tutorials");
+  };
 
   const handleUserPanel = () => {
     onNavigate("user-panel");
@@ -41,9 +53,14 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   return (
     <AppBar position="static" className="header">
       <Toolbar className="header-toolbar">
-        <Typography variant="h6" className="header-title">
-          {t("app.title")}
-        </Typography>
+        <IconButton
+          color="inherit"
+          onClick={handleHome}
+          className="header-home-button"
+          aria-label="home"
+        >
+          <HomeIcon />
+        </IconButton>
 
         <Box className="header-user-section">
           <LanguageSwitcher />

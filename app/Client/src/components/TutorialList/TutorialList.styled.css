@@ -11,6 +11,8 @@
 
 .tutorial-title {
   margin: 0;
+  color: #1976d2;
+  font-weight: 600;
 }
 
 .tutorial-logout-button {
@@ -23,4 +25,52 @@
 
 .tutorial-empty-message {
   margin-top: 1rem;
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+.tutorial-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+/* Table Styling */
+.tutorial-table-header {
+  background-color: #f5f5f5 !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  color: #333 !important;
+  border-bottom: 2px solid #1976d2 !important;
+  padding: 16px !important;
+}
+
+.tutorial-table-row {
+  transition: background-color 0.2s ease;
+}
+
+.tutorial-table-row:hover {
+  background-color: #f9f9f9 !important;
+}
+
+.tutorial-table-cell {
+  padding: 14px 16px !important;
+  font-size: 0.9rem !important;
+  color: #444 !important;
+}
+
+.tutorial-title-cell {
+  font-weight: 500 !important;
+  color: #1976d2 !important;
+  max-width: 250px;
+}
+
+.tutorial-description-cell {
+  color: #666 !important;
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

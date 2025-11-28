@@ -31,8 +31,10 @@ exports.create = (req, res) => {
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
+  const page = req.query.page ? parseInt(req.query.page) : undefined;
+  const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 
-  Tutorial.getAll(title, (err, data) => {
+  Tutorial.getAll(title, page, limit, (err, data) => {
     if (err)
       res.status(500).send({
         message:

@@ -9,6 +9,10 @@
   padding: 0.5rem 2rem;
 }
 
+.header-home-button {
+  margin-right: 1rem;
+}
+
 .header-title {
   font-weight: 600;
 }

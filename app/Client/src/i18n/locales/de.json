@@ -34,6 +34,8 @@
     "id": "ID",
     "titleColumn": "Titel",
     "description": "Beschreibung",
+    "createdBy": "Erstellt von",
+    "subscription": "Abonnement",
     "published": "Veröffentlicht",
     "yes": "Ja",
     "no": "Nein",

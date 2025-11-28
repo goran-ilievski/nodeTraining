@@ -43,23 +43,54 @@ Tutorial.findById = (id, result) => {
   });
 };
 
-Tutorial.getAll = (title, result) => {
+Tutorial.getAll = (title, page, limit, result) => {
   let query = "SELECT * FROM tutorials";
+  let countQuery = "SELECT COUNT(*) FROM tutorials";
   let params = [];
+  let paramIndex = 1;
 
   if (title) {
-    query += " WHERE title ILIKE $1";
+    query += " WHERE title ILIKE $" + paramIndex;
+    countQuery += " WHERE title ILIKE $1";
     params.push(`%${title}%`);
+    paramIndex++;
   }
 
-  sql.query(query, params, (err, res) => {
+  // Add sorting by title descending
+  query += " ORDER BY title DESC";
+
+  // Add pagination if page and limit are provided
+  if (page !== undefined && limit !== undefined) {
+    const offset = (page - 1) * limit;
+    query += ` LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
+    params.push(limit, offset);
+  }
+
+  // Get total count
+  sql.query(countQuery, title ? [params[0]] : [], (err, countRes) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    result(null, res.rows);
+    const totalItems = parseInt(countRes.rows[0].count);
+
+    // Get paginated data
+    sql.query(query, params, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      result(null, {
+        tutorials: res.rows,
+        totalItems: totalItems,
+        currentPage: page || 1,
+        totalPages: limit ? Math.ceil(totalItems / limit) : 1,
+      });
+    });
   });
 };
 

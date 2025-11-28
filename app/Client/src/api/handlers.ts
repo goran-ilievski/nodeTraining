@@ -15,6 +15,15 @@ export interface Tutorial {
   title: string;
   description: string;
   published: boolean;
+  created_by: string;
+  subscription_needed: boolean;
+}
+
+export interface PaginatedTutorials {
+  tutorials: Tutorial[];
+  totalItems: number;
+  currentPage: number;
+  totalPages: number;
 }
 
 export interface UserData {
@@ -144,8 +153,15 @@ export const userAPI = {
 
 // Tutorial API handlers
 export const tutorialAPI = {
-  getAll: async (): Promise<Tutorial[]> => {
-    const response = await fetch(`${API_BASE_URL}/tutorials`);
+  getAll: async (
+    page?: number,
+    limit?: number
+  ): Promise<PaginatedTutorials | Tutorial[]> => {
+    let url = `${API_BASE_URL}/tutorials`;
+    if (page && limit) {
+      url += `?page=${page}&limit=${limit}`;
+    }
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Failed to fetch tutorials");
     }
