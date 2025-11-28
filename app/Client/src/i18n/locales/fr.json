@@ -1,0 +1,89 @@
+{
+  "app": {
+    "title": "Application de Tutoriels"
+  },
+  "header": {
+    "userSettings": "Paramètres Utilisateur",
+    "userDetails": "Détails de l'Utilisateur",
+    "logout": "Déconnexion"
+  },
+  "landing": {
+    "welcome": "Bienvenue dans le Gestionnaire de Tutoriels",
+    "subtitle": "Gérez vos tutoriels efficacement",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "login": "Connexion",
+    "noAccount": "Pas de compte ?",
+    "signUp": "S'inscrire"
+  },
+  "createUser": {
+    "title": "Créer un Nouvel Utilisateur",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "role": "Rôle",
+    "selectRole": "Sélectionner un rôle",
+    "createUser": "Créer l'Utilisateur",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "goToLogin": "Se connecter",
+    "success": "Utilisateur créé avec succès !",
+    "error": "Échec de la création de l'utilisateur"
+  },
+  "tutorials": {
+    "title": "Tutoriels",
+    "id": "ID",
+    "titleColumn": "Titre",
+    "description": "Description",
+    "published": "Publié",
+    "yes": "Oui",
+    "no": "Non",
+    "noTutorials": "Aucun tutoriel disponible.",
+    "errorFetching": "Erreur"
+  },
+  "userPanel": {
+    "title": "Gestion des Utilisateurs",
+    "id": "ID",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "role": "Rôle",
+    "createdAt": "Créé le",
+    "actions": "Actions",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "noUsers": "Aucun utilisateur trouvé.",
+    "errorFetching": "Erreur",
+    "deleteSuccess": "Utilisateur supprimé avec succès",
+    "deleteError": "Échec de la suppression de l'utilisateur"
+  },
+  "userDetails": {
+    "title": "Détails de l'Utilisateur",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "role": "Rôle",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le",
+    "editMode": "Mode Édition",
+    "viewMode": "Mode Affichage",
+    "save": "Enregistrer les Modifications",
+    "cancel": "Annuler",
+    "updateSuccess": "Utilisateur mis à jour avec succès !",
+    "updateError": "Échec de la mise à jour de l'utilisateur"
+  },
+  "logout": {
+    "title": "Confirmer la Déconnexion",
+    "message": "Êtes-vous sûr de vouloir vous déconnecter ?",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "errorBoundary": {
+    "title": "Oups ! Quelque chose s'est mal passé",
+    "message": "Nous sommes désolés, mais quelque chose d'inattendu s'est produit. Veuillez réessayer plus tard ou contacter le support si le problème persiste.",
+    "goHome": "Aller à l'Accueil"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "close": "Fermer"
+  }
+}

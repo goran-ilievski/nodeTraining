@@ -1,10 +1,31 @@
 .language-switcher {
   display: flex;
-  gap: 8px;
   align-items: center;
 }
 
-.language-switcher button {
-  min-width: 50px;
+.language-button {
+  min-width: 80px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  gap: 6px !important;
+  align-items: center !important;
+  padding: 4px 12px !important;
+}
+
+.language-button .flag {
+  font-size: 18px;
+}
+
+.language-button .lang-code {
+  font-size: 13px;
   font-weight: 600;
+}
+
+.language-menu .flag {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.language-menu .lang-name {
+  font-size: 14px;
 }

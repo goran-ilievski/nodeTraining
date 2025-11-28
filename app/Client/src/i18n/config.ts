@@ -4,6 +4,8 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 const en = require("./locales/en.json");
 const mk = require("./locales/mk.json");
+const de = require("./locales/de.json");
+const fr = require("./locales/fr.json");
 
 i18n
   .use(LanguageDetector)
@@ -15,6 +17,12 @@ i18n
       },
       mk: {
         translation: mk,
+      },
+      de: {
+        translation: de,
+      },
+      fr: {
+        translation: fr,
       },
     },
     fallbackLng: "en",

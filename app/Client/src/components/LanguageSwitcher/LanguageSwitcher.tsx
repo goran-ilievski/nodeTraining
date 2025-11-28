@@ -1,31 +1,69 @@
-import React from "react";
-import { Button, Box } from "@mui/material";
+import React, { useState } from "react";
+import { Button, Menu, MenuItem, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import "./LanguageSwitcher.styled.css";
 
+interface Language {
+  code: string;
+  name: string;
+  flag: string;
+}
+
+const languages: Language[] = [
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "mk", name: "Македонски", flag: "🇲🇰" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "fr", name: "Français", flag: "🇫🇷" },
+];
+
 const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const changeLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
+  const currentLanguage =
+    languages.find((lang) => lang.code === i18n.language) || languages[0];
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const changeLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    handleClose();
   };
 
   return (
     <Box className="language-switcher">
       <Button
-        variant={i18n.language === "en" ? "contained" : "outlined"}
-        onClick={() => changeLanguage("en")}
+        variant="outlined"
+        onClick={handleClick}
+        className="language-button"
         size="small"
       >
-        EN
+        <span className="flag">{currentLanguage.flag}</span>
+        <span className="lang-code">{currentLanguage.code.toUpperCase()}</span>
       </Button>
-      <Button
-        variant={i18n.language === "mk" ? "contained" : "outlined"}
-        onClick={() => changeLanguage("mk")}
-        size="small"
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        className="language-menu"
       >
-        MK
-      </Button>
+        {languages.map((lang) => (
+          <MenuItem
+            key={lang.code}
+            onClick={() => changeLanguage(lang.code)}
+            selected={lang.code === i18n.language}
+          >
+            <span className="flag">{lang.flag}</span>
+            <span className="lang-name">{lang.name}</span>
+          </MenuItem>
+        ))}
+      </Menu>
     </Box>
   );
 };

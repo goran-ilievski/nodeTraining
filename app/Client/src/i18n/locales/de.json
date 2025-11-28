@@ -1,0 +1,89 @@
+{
+  "app": {
+    "title": "Tutorial Anwendung"
+  },
+  "header": {
+    "userSettings": "Benutzereinstellungen",
+    "userDetails": "Benutzerdetails",
+    "logout": "Abmelden"
+  },
+  "landing": {
+    "welcome": "Willkommen beim Tutorial-Manager",
+    "subtitle": "Verwalten Sie Ihre Tutorials effizient",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "login": "Anmelden",
+    "noAccount": "Kein Konto?",
+    "signUp": "Registrieren"
+  },
+  "createUser": {
+    "title": "Neuen Benutzer erstellen",
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "role": "Rolle",
+    "selectRole": "Rolle auswählen",
+    "createUser": "Benutzer erstellen",
+    "alreadyHaveAccount": "Bereits ein Konto?",
+    "goToLogin": "Zur Anmeldung",
+    "success": "Benutzer erfolgreich erstellt!",
+    "error": "Fehler beim Erstellen des Benutzers"
+  },
+  "tutorials": {
+    "title": "Tutorials",
+    "id": "ID",
+    "titleColumn": "Titel",
+    "description": "Beschreibung",
+    "published": "Veröffentlicht",
+    "yes": "Ja",
+    "no": "Nein",
+    "noTutorials": "Keine Tutorials verfügbar.",
+    "errorFetching": "Fehler"
+  },
+  "userPanel": {
+    "title": "Benutzerverwaltung",
+    "id": "ID",
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "createdAt": "Erstellt am",
+    "actions": "Aktionen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "noUsers": "Keine Benutzer gefunden.",
+    "errorFetching": "Fehler",
+    "deleteSuccess": "Benutzer erfolgreich gelöscht",
+    "deleteError": "Fehler beim Löschen des Benutzers"
+  },
+  "userDetails": {
+    "title": "Benutzerdetails",
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "createdAt": "Erstellt am",
+    "updatedAt": "Aktualisiert am",
+    "editMode": "Bearbeitungsmodus",
+    "viewMode": "Ansichtsmodus",
+    "save": "Änderungen speichern",
+    "cancel": "Abbrechen",
+    "updateSuccess": "Benutzer erfolgreich aktualisiert!",
+    "updateError": "Fehler beim Aktualisieren des Benutzers"
+  },
+  "logout": {
+    "title": "Abmeldung bestätigen",
+    "message": "Möchten Sie sich wirklich abmelden?",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "errorBoundary": {
+    "title": "Hoppla! Etwas ist schief gelaufen",
+    "message": "Es tut uns leid, aber etwas Unerwartetes ist passiert. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support, wenn das Problem weiterhin besteht.",
+    "goHome": "Zur Startseite"
+  },
+  "common": {
+    "loading": "Lädt...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "close": "Schließen"
+  }
+}

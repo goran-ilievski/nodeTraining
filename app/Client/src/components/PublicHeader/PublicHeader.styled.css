@@ -1,0 +1,21 @@
+.public-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.public-header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 24px !important;
+}
+
+.public-header-title {
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 1.5rem !important;
+}
+
+.public-header-language {
+  display: flex;
+  align-items: center;
+}

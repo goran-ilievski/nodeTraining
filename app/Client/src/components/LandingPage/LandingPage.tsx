@@ -12,6 +12,7 @@ import { useAuth } from "../../context/AuthContext";
 import { userAPI } from "../../api";
 import LoadingSpinner from "../LoadingSpinner";
 import ErrorPopup from "../ErrorPopup";
+import PublicHeader from "../PublicHeader";
 import "./LandingPage.styled.css";
 
 interface LandingPageProps {
@@ -54,71 +55,74 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box className="landing-container">
-        <Paper elevation={3} className="landing-paper">
-          <Typography variant="h4" component="h1" className="landing-title">
-            Tutorial Manager
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            className="landing-subtitle"
-          >
-            Please log in to continue
-          </Typography>
-
-          <form onSubmit={handleLogin} className="landing-form">
-            <TextField
-              label="Username"
-              variant="outlined"
-              fullWidth
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-
-            <TextField
-              label="Password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="large"
-              fullWidth
+    <>
+      <PublicHeader />
+      <Container maxWidth="sm">
+        <Box className="landing-container">
+          <Paper elevation={3} className="landing-paper">
+            <Typography variant="h4" component="h1" className="landing-title">
+              Tutorial Manager
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              className="landing-subtitle"
             >
-              Log In
-            </Button>
+              Please log in to continue
+            </Typography>
 
-            <Button
-              variant="outlined"
-              color="secondary"
-              size="large"
-              fullWidth
-              onClick={handleCreateUser}
-            >
-              Create User
-            </Button>
-          </form>
-        </Paper>
-      </Box>
+            <form onSubmit={handleLogin} className="landing-form">
+              <TextField
+                label="Username"
+                variant="outlined"
+                fullWidth
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
 
-      <LoadingSpinner open={loginMutation.isPending} />
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-      <ErrorPopup
-        open={showError}
-        onClose={() => setShowError(false)}
-        message={errorMessage}
-      />
-    </Container>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="large"
+                fullWidth
+              >
+                Log In
+              </Button>
+
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="large"
+                fullWidth
+                onClick={handleCreateUser}
+              >
+                Create User
+              </Button>
+            </form>
+          </Paper>
+        </Box>
+
+        <LoadingSpinner open={loginMutation.isPending} />
+
+        <ErrorPopup
+          open={showError}
+          onClose={() => setShowError(false)}
+          message={errorMessage}
+        />
+      </Container>
+    </>
   );
 };
 

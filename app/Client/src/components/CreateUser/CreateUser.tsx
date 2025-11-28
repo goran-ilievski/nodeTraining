@@ -16,6 +16,7 @@ import { userAPI } from "../../api";
 import SuccessPopup from "../SuccessPopup";
 import ErrorPopup from "../ErrorPopup";
 import LoadingSpinner from "../LoadingSpinner";
+import PublicHeader from "../PublicHeader";
 import "./CreateUser.styled.css";
 
 interface CreateUserProps {
@@ -101,102 +102,109 @@ const CreateUser: React.FC<CreateUserProps> = ({ onNavigate }) => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box className="create-user-container">
-        <Paper elevation={3} className="create-user-paper">
-          <Typography variant="h4" component="h1" className="create-user-title">
-            Create New User
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            className="create-user-subtitle"
-          >
-            Fill in the details to create a new user account
-          </Typography>
+    <>
+      <PublicHeader />
+      <Container maxWidth="sm">
+        <Box className="create-user-container">
+          <Paper elevation={3} className="create-user-paper">
+            <Typography
+              variant="h4"
+              component="h1"
+              className="create-user-title"
+            >
+              Create New User
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              className="create-user-subtitle"
+            >
+              Fill in the details to create a new user account
+            </Typography>
 
-          <form onSubmit={handleSubmit} className="create-user-form">
-            <TextField
-              label="Username"
-              variant="outlined"
-              fullWidth
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              disabled={mutation.isPending}
-            />
-
-            <TextField
-              label="Password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              required
-              value={password}
-              onChange={handlePasswordChange}
-              disabled={mutation.isPending}
-              error={!!passwordError}
-              helperText={
-                passwordError ||
-                "Min 8 characters, 1 capital letter, 1 special character"
-              }
-            />
-
-            <FormControl fullWidth required>
-              <InputLabel>Role</InputLabel>
-              <Select
-                value={role}
-                label="Role"
-                onChange={(e) => setRole(e.target.value)}
-                disabled={mutation.isPending}
-              >
-                <MenuItem value="superuser">Superuser</MenuItem>
-                <MenuItem value="reviewer">Reviewer</MenuItem>
-                <MenuItem value="guest">Guest</MenuItem>
-              </Select>
-            </FormControl>
-
-            <Box className="create-user-buttons">
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                size="large"
-                fullWidth
-                disabled={mutation.isPending}
-              >
-                Create User
-              </Button>
-
-              <Button
+            <form onSubmit={handleSubmit} className="create-user-form">
+              <TextField
+                label="Username"
                 variant="outlined"
-                color="secondary"
-                size="large"
                 fullWidth
-                onClick={handleCancel}
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 disabled={mutation.isPending}
-              >
-                Cancel
-              </Button>
-            </Box>
-          </form>
-        </Paper>
-      </Box>
+              />
 
-      <LoadingSpinner open={mutation.isPending} />
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                required
+                value={password}
+                onChange={handlePasswordChange}
+                disabled={mutation.isPending}
+                error={!!passwordError}
+                helperText={
+                  passwordError ||
+                  "Min 8 characters, 1 capital letter, 1 special character"
+                }
+              />
 
-      <SuccessPopup
-        open={showSuccess}
-        onClose={handleSuccessClose}
-        message={`User ${username} created successfully!`}
-      />
+              <FormControl fullWidth required>
+                <InputLabel>Role</InputLabel>
+                <Select
+                  value={role}
+                  label="Role"
+                  onChange={(e) => setRole(e.target.value)}
+                  disabled={mutation.isPending}
+                >
+                  <MenuItem value="superuser">Superuser</MenuItem>
+                  <MenuItem value="reviewer">Reviewer</MenuItem>
+                  <MenuItem value="guest">Guest</MenuItem>
+                </Select>
+              </FormControl>
 
-      <ErrorPopup
-        open={showError}
-        onClose={handleErrorClose}
-        message={errorMessage}
-      />
-    </Container>
+              <Box className="create-user-buttons">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  fullWidth
+                  disabled={mutation.isPending}
+                >
+                  Create User
+                </Button>
+
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  fullWidth
+                  onClick={handleCancel}
+                  disabled={mutation.isPending}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </form>
+          </Paper>
+        </Box>
+
+        <LoadingSpinner open={mutation.isPending} />
+
+        <SuccessPopup
+          open={showSuccess}
+          onClose={handleSuccessClose}
+          message={`User ${username} created successfully!`}
+        />
+
+        <ErrorPopup
+          open={showError}
+          onClose={handleErrorClose}
+          message={errorMessage}
+        />
+      </Container>
+    </>
   );
 };
 
