@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
 import LogoutDialog from "../LogoutDialog";
 import "./Header.styled.css";
@@ -18,21 +10,9 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const { user, logout } = useAuth();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
-  const handleSettingsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (user?.role === "superuser") {
-      setAnchorEl(event.currentTarget);
-    }
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleUserPanel = () => {
-    handleClose();
     onNavigate("user-panel");
   };
 
@@ -72,26 +52,14 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             </Typography>
           </Box>
 
-          {user.role !== "guest" && (
-            <>
-              <Button
-                color="inherit"
-                onClick={handleSettingsClick}
-                className="header-button"
-              >
-                Settings
-              </Button>
-
-              {user.role === "superuser" && (
-                <Menu
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleUserPanel}>User Panel</MenuItem>
-                </Menu>
-              )}
-            </>
+          {user.role !== "guest" && user.role === "superuser" && (
+            <Button
+              color="inherit"
+              onClick={handleUserPanel}
+              className="header-button"
+            >
+              User Settings
+            </Button>
           )}
 
           <Button
