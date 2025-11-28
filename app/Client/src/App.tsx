@@ -40,7 +40,7 @@ const queryClient = new QueryClient({
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
-  const [currentView, setCurrentView] = useState<string>("login");
+  const [currentView, setCurrentView] = useState<string>("landing");
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const handleNavigate = (view: string) => {
@@ -55,6 +55,7 @@ function AppContent() {
   };
 
   const renderView = () => {
+    // Always show landing/create-user if not authenticated
     if (!isAuthenticated) {
       if (currentView === "create-user") {
         return <CreateUser onNavigate={handleNavigate} />;
@@ -62,6 +63,7 @@ function AppContent() {
       return <LandingPage onNavigate={handleNavigate} />;
     }
 
+    // Only show protected views if authenticated
     switch (currentView) {
       case "tutorials":
         return <TutorialList onNavigate={handleNavigate} />;
@@ -71,6 +73,10 @@ function AppContent() {
         return (
           <UserDetails onNavigate={handleNavigate} userId={selectedUserId} />
         );
+      case "landing":
+      case "create-user":
+        // Redirect to tutorials if trying to access login pages while authenticated
+        return <TutorialList onNavigate={handleNavigate} />;
       default:
         return <TutorialList onNavigate={handleNavigate} />;
     }
