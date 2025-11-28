@@ -48,9 +48,9 @@ class ErrorBoundary extends React.Component<
   };
 
   render() {
-    const { t } = this.props;
-
     if (this.state.hasError) {
+      const t = this.props.t || ((key: string) => key);
+
       return (
         <Dialog open={true} maxWidth="sm" fullWidth>
           <DialogContent className="error-boundary-content">
