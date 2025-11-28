@@ -39,11 +39,10 @@ const TutorialList: React.FC<TutorialListProps> = () => {
     data: tutorials = [],
     isLoading,
     error,
-    refetch,
   } = useQuery({
     queryKey: ["tutorials"],
     queryFn: fetchTutorials,
-    enabled: false,
+    enabled: true,
   });
 
   return (
@@ -53,15 +52,6 @@ const TutorialList: React.FC<TutorialListProps> = () => {
           Tutorials
         </Typography>
       </Box>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => refetch()}
-        className="tutorial-button"
-      >
-        Get All Tutorials
-      </Button>
 
       {isLoading && <CircularProgress />}
 
@@ -96,7 +86,7 @@ const TutorialList: React.FC<TutorialListProps> = () => {
 
       {!isLoading && tutorials.length === 0 && !error && (
         <Typography className="tutorial-empty-message">
-          No tutorials found. Click the button to fetch tutorials.
+          No tutorials available.
         </Typography>
       )}
     </Box>
